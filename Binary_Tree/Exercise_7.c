@@ -4,6 +4,7 @@ determine se ela satisfaz as propriedades de uma árvore binária de busca.*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
 
 typedef struct Node {
     int data;
@@ -33,18 +34,18 @@ Node* insert(Node* root, int data) {
     }
     return root;
 }
-bool isBSTUtil(Node* node, int min, int max) {
+bool isBSTUtil(Node* node, long long min, long long max) {
     if (node == NULL) {
         return true;
     }
     if (node->data < min || node->data > max) {
         return false;
     }
-    return isBSTUtil(node->left, min, node->data - 1) &&
-           isBSTUtil(node->right, node->data + 1, max);
+    return isBSTUtil(node->left, min, (long long)node->data - 1) &&
+           isBSTUtil(node->right, (long long)node->data + 1, max);
 }
 bool isBST(Node* root) {
-    return isBSTUtil(root, INT_MIN, INT_MAX);
+    return isBSTUtil(root, LLONG_MIN, LLONG_MAX);
 }
 void freeTree(Node* root) {
     if (root != NULL) {
